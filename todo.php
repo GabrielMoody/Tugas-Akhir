@@ -1,5 +1,6 @@
 <?php
 	require_once "database.php";
+	require_once "functions.php";
 	
 	session_start();
 		
@@ -7,14 +8,17 @@
 		header('location: login');
 	}
 	
-	$sql = "SELECT tasks.id, task_name, isdone FROM tasks INNER JOIN users ON tasks.user_id=users.id WHERE users.username=?";
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+		add();
+	}
+	
+	$sql = "SELECT tasks.id, task_name FROM tasks INNER JOIN users ON tasks.user_id=users.id WHERE users.username=?";
 	$prepare = mysqli_prepare($conn, $sql);
 	mysqli_stmt_bind_param($prepare, "s", $_SESSION['username']);
 	mysqli_stmt_execute($prepare);
 	
 	$result = mysqli_stmt_get_result($prepare);
 
-	
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +58,7 @@
   <div class="container">
     <h2>ToDo List App</h2>
     
-	<form type="POST" action="add.php">
+	<form method="POST">
 		<input type="text" name="task" placeholder="Add task...">
 		<button type="submit" id="add">Add</button>
 	</form>
@@ -62,6 +66,7 @@
     <ul id="list">
 		<?php while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) :?>
 			<li>
+				<input type="checkbox" name="check">
 				<p><?= $row["task_name"] ?></p>
 				<a class="delete" href="delete?id=<?= $row['id'] ?>">X</a>
 			</li>
