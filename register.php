@@ -40,8 +40,8 @@
 			mysqli_stmt_bind_param($prepare, "ss", $username, $hash);
 			
 			mysqli_stmt_execute($prepare);
-			
-			header("Location: login.php");
+
+			header("Location: login");
 			
 			mysqli_stmt_close($prepare);
 		}
@@ -66,7 +66,7 @@
     <a href="index.html" class="nav-logo">TODO LIST</a>
     <ul class="nav-menu">
         <li class="nav-item">
-            <a href="index.html" class="nav-link">Home</a>
+            <a href="index" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
             <a href="login" class="nav-link">Login</a>

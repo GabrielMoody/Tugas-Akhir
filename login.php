@@ -24,7 +24,7 @@
 			$_SESSION['username'] =  $user;
 			$_SESSION['logged_in'] =  true;
 			
-			header("Location: todo.php");
+			header("Location: todo");
 		} else {
 			$login_err = "Username/password is incorrect";
 		}
