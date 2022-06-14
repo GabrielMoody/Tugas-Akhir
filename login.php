@@ -21,7 +21,7 @@
 			mysqli_stmt_fetch($prepare);
 			
 			password_verify($password, $pass);
-			$_SESSION['username'] =  $username;
+			$_SESSION['username'] =  $user;
 			$_SESSION['logged_in'] =  true;
 			
 			header("Location: todo.php");

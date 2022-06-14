@@ -101,7 +101,5 @@
     </form>
   </div>
 
-  <!--<script src="js/register.js"></script>
-  <script src="js/index.js"></script>-->
 </body>
 </html>

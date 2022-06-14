@@ -70,7 +70,7 @@ h2 {
   padding-top: 20px;
 }
 
-input {
+input[type=text] {
   width: 90%;
   margin-top: 20px;
   height: 50px;
@@ -78,6 +78,14 @@ input {
   border: 2px solid #dbdddf;
   color: #111;
   font-size: 20px;
+}
+
+input[type=checkbox] {
+  position: absolute;
+  width: 20px;
+  height: 20px; 
+  left: 10px; 
+  bottom: 10px;
 }
 
 input:focus {
@@ -135,10 +143,6 @@ ul li.checked::before {
   color: white;
 }
 
-.anggota {
-  float: right;
-}
-
 #add {
   border-radius: 5px;
   margin-left: 10px;
@@ -165,30 +169,12 @@ ul li.checked::before {
   color: red;
 }
 
-/* @media (max-width: 576px) {
-  nav .navigation {
-    display: none;
-  }
-  
-  .container {
-    width: 100%;
-    margin: 0;
-  }
-
-  input{
-    position: relative;
-    width: 90%;
-    left: 10px;
-  }
-
-  #add {
-    margin-top: 10px;
-    width: 90%;
-  }
-} */
+a {
+	text-decoration: none;
+}
 
 @media screen and (max-width: 768px) {
-  input{
+  input[type=text]{
     position: relative;
     width: 90%;
     left: 10px;
@@ -228,7 +214,7 @@ ul li.checked::before {
 }
 
 @media (max-width: 1075px) {
-  input{
+  input[type=text]{
     position: relative;
     width: 95%;
     left: 10px;

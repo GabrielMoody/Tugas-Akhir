@@ -1,9 +1,20 @@
 <?php
-	session_start();
+	require_once "database.php";
 	
+	session_start();
+		
 	if(!isset($_SESSION['logged_in'])) {
-		header("Location: login");
+		header('location: login');
 	}
+	
+	$sql = "SELECT tasks.id, task_name, isdone FROM tasks INNER JOIN users ON tasks.user_id=users.id WHERE users.username=?";
+	$prepare = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($prepare, "s", $_SESSION['username']);
+	mysqli_stmt_execute($prepare);
+	
+	$result = mysqli_stmt_get_result($prepare);
+
+	
 ?>
 
 <!DOCTYPE html>
@@ -23,15 +34,17 @@
   <nav class="navbar">
     <a href="index" class="nav-logo">TODO LIST</a>
     <ol class="nav-menu">
-        <li class="nav-item">
-            <a href="index" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item">
-            <a href="profile" class="nav-link">About Us</a>
-        </li>
-        <li class="nav-item">
-            <a href="logout" class="nav-link">Logout</a>
-        </li>
+
+			<li class="nav-item">
+				<a href="index" class="nav-link">Home</a>
+			</li>
+			<li class="nav-item">
+				<a href="profile" class="nav-link">About Us</a>
+			</li>
+			<li class="nav-item">
+				<a href="logout" class="nav-link">Logout</a>
+			</li>
+
     </ol>
     <div class="bars">
         <i class="fa-solid fa-bars"></i>
@@ -40,15 +53,23 @@
 
   <div class="container">
     <h2>ToDo List App</h2>
-      
-    <input type="text" id="task" placeholder="Add task...">
-    <button id="add" onclick="add()">Add</button>
-
-    <ul id="list"></ul>
-    <div id="error"></div>
+    
+	<form type="POST" action="add.php">
+		<input type="text" name="task" placeholder="Add task...">
+		<button type="submit" id="add">Add</button>
+	</form>
+	
+    <ul id="list">
+		<?php while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) :?>
+			<li>
+				<p><?= $row["task_name"] ?></p>
+				<a class="delete" href="delete?id=<?= $row['id'] ?>">X</a>
+			</li>
+		<?php endwhile; ?>
+	</ul>
+	
   </div>    
 
-  <!--<script src="js/todo.js"></script> 
-  <script src="js/index.js"></script>-->
+   <script src="js/todo.js"></script> 
 </body>
 </html>
