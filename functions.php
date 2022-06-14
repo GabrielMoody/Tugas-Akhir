@@ -10,8 +10,6 @@
 		$prepare = mysqli_prepare($conn, $sql);
 		mysqli_stmt_bind_param($prepare, "ss", $task, $username);
 		mysqli_stmt_execute($prepare);
-
-		$result = mysqli_stmt_get_result($prepare);
 		
 		header('Location: todo');
 	}
